@@ -49,4 +49,4 @@ pub struct PeerId(pub [u8; 32]);
 pub type Timestamp = SystemTime;
 
 /// Standard TTL used when none specified
-pub const DEFAULT_TTL: Duration = Duration::from_secs(3600); 
+pub const DEFAULT_TTL: Duration = Duration::from_secs(3600);

@@ -31,7 +31,10 @@ pub struct MockTransport {
 impl MockTransport {
     pub fn new() -> Self {
         let (tx, _) = broadcast::channel(1024);
-        Self { peers: Arc::new(RwLock::new(Vec::new())), tx }
+        Self {
+            peers: Arc::new(RwLock::new(Vec::new())),
+            tx,
+        }
     }
 }
 
@@ -56,7 +59,10 @@ impl Transport for MockTransport {
     async fn broadcast(&self, data: Vec<u8>) -> Result<()> {
         let peers = self.peers.read().await.clone();
         for peer in peers {
-            let _ = self.tx.send(TransportEvent::DataReceived { peer, data: data.clone() });
+            let _ = self.tx.send(TransportEvent::DataReceived {
+                peer,
+                data: data.clone(),
+            });
         }
         Ok(())
     }
@@ -68,4 +74,4 @@ impl Transport for MockTransport {
     fn subscribe_events(&self) -> broadcast::Receiver<TransportEvent> {
         self.tx.subscribe()
     }
-} 
+}

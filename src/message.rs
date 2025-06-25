@@ -45,4 +45,4 @@ impl Message {
             signature: Vec::new(),
         }
     }
-} 
+}

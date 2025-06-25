@@ -24,12 +24,17 @@ impl MessageManager {
         content: MessageContent,
     ) -> Result<Message> {
         let message = Message::new(sender, recipient, content);
-        self.db.insert(message.id.to_bytes(), bincode::serialize(&message)?)?;
+        self.db
+            .insert(message.id.to_bytes(), bincode::serialize(&message)?)?;
         Ok(message)
     }
 
     /// Placeholder "encryption" – simply serializes with bincode
-    pub async fn encrypt_message(&self, content: &MessageContent, _peer_pub: &UserId) -> Result<Vec<u8>> {
+    pub async fn encrypt_message(
+        &self,
+        content: &MessageContent,
+        _peer_pub: &UserId,
+    ) -> Result<Vec<u8>> {
         Ok(bincode::serialize(content)?)
     }
 
@@ -62,4 +67,4 @@ impl MessageManager {
         self.db.insert(id.to_bytes(), &[])?;
         Ok(())
     }
-} 
+}

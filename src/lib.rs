@@ -1,11 +1,11 @@
 //! DisasterMesh core library – basic data structures & traits
 
-pub mod types;
 pub mod message;
-pub mod transport;
 pub mod message_manager;
+pub mod transport;
+pub mod types;
 
-pub use types::*;
 pub use message::*;
+pub use message_manager::*;
 pub use transport::*;
-pub use message_manager::*; 
+pub use types::*;
