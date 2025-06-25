@@ -25,6 +25,12 @@ impl MessageId {
     }
 }
 
+impl Default for MessageId {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 /// Public-key hash identifying a user
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct UserId(pub [u8; 32]);

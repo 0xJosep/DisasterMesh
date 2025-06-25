@@ -1,12 +1,11 @@
 use async_trait::async_trait;
-use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use tokio::sync::{broadcast, RwLock};
 
 use crate::types::PeerId;
 use anyhow::Result;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub enum TransportEvent {
     PeerConnected(PeerId),
     PeerDisconnected(PeerId),
@@ -33,6 +32,12 @@ impl MockTransport {
     pub fn new() -> Self {
         let (tx, _) = broadcast::channel(1024);
         Self { peers: Arc::new(RwLock::new(Vec::new())), tx }
+    }
+}
+
+impl Default for MockTransport {
+    fn default() -> Self {
+        Self::new()
     }
 }
 

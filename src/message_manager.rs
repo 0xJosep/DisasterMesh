@@ -1,23 +1,19 @@
 use crate::message::{Message, MessageContent};
 use crate::types::{MessageId, UserId};
 use anyhow::{Context, Result};
-use serde::{Deserialize, Serialize};
 use sled::Db;
 use std::sync::Arc;
 use std::time::{Duration, SystemTime};
-use tokio::sync::RwLock;
 
 #[derive(Clone)]
 pub struct MessageManager {
     db: Arc<Db>,
-    seen: Arc<RwLock<sled::Tree>>, // message ids seen
 }
 
 impl MessageManager {
     pub async fn new() -> Result<Self> {
         let db = sled::open(".disastermesh_store").context("open sled")?;
-        let seen = db.open_tree("seen")?;
-        Ok(Self { db: Arc::new(db), seen: Arc::new(RwLock::new(seen)) })
+        Ok(Self { db: Arc::new(db) })
     }
 
     /// Create a new signed (signature omitted in stub) message
@@ -55,7 +51,11 @@ impl MessageManager {
     }
 
     pub async fn is_new_message(&self, id: &MessageId) -> bool {
-        !self.db.contains_key(id.to_bytes()).unwrap_or(false)
+        // If sled errors, treat as not seen to avoid dropping message.
+        self.db
+            .get(id.to_bytes())
+            .map(|opt| opt.is_none())
+            .unwrap_or(true)
     }
 
     pub async fn mark_message_seen(&self, id: &MessageId) -> Result<()> {
