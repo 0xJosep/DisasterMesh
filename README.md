@@ -36,8 +36,8 @@ DisasterMesh is an **offline-first, resilient mesh-network communication platfor
 ```bash
 # Prerequisites: Rust 1.76+ (stable), cargo
 
-git clone https://github.com/<your-user>/disastermesh.git
-cd disastermesh
+git clone https://github.com/0xJosep/DisasterMesh.git
+cd DisasterMesh
 
 # Run the test-suite (should be green)
 cargo test
