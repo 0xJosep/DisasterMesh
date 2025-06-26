@@ -31,6 +31,7 @@ pub trait Transport: Send + Sync {
 }
 
 /// A basic in-memory mock transport useful for early tests
+#[derive(Clone)]
 pub struct MockTransport {
     peers: Arc<RwLock<Vec<PeerId>>>,
     tx: broadcast::Sender<TransportEvent>,
