@@ -8,6 +8,7 @@ use std::time::Duration;
 pub enum MessageContent {
     Text(String),
     File { name: String, data: Vec<u8> },
+    Routing(crate::routing_control::RoutingControl),
 }
 
 /// Priority levels – lower value is higher priority
