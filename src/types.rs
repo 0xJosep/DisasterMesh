@@ -25,6 +25,12 @@ impl MessageId {
     }
 }
 
+impl Default for MessageId {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 /// Public-key hash identifying a user
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct UserId(pub [u8; 32]);
@@ -43,4 +49,4 @@ pub struct PeerId(pub [u8; 32]);
 pub type Timestamp = SystemTime;
 
 /// Standard TTL used when none specified
-pub const DEFAULT_TTL: Duration = Duration::from_secs(3600); 
+pub const DEFAULT_TTL: Duration = Duration::from_secs(3600);
