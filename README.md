@@ -9,6 +9,7 @@ DisasterMesh is an **offline-first, resilient mesh-network communication platfor
 * 🗄  **Offline operation** – no internet or cellular required
 * 📡  **Multi-transport** – Bluetooth LE & Wi-Fi Direct (LoRa/HAM planned)
 * 🔀  **Mesh routing** – AODV with epidemic fallback
+* 📍  **Routing engine scaffold** – initial route table with metrics & aging
 * 🔒  **Secure** – Ed25519 identity keys, AES-GCM encryption (placeholder in MVP)
 * 🔁  **Store-and-forward** – deliver messages when paths appear
 * 🖥️  **Cross-platform** – Linux, Windows, macOS (mobile planned)
@@ -22,6 +23,7 @@ DisasterMesh is an **offline-first, resilient mesh-network communication platfor
 │   ├── message.rs      # Message structures
 │   ├── message_manager.rs
 │   ├── transport.rs
+│   ├── routing.rs        # Route table & engine
 │   └── types.rs
 ├── tests/              # Example unit tests
 ├── Implementation Plan.md

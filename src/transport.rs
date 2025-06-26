@@ -20,6 +20,14 @@ pub trait Transport: Send + Sync {
     async fn broadcast(&self, data: Vec<u8>) -> Result<()>;
     fn get_peers(&self) -> Vec<PeerId>;
     fn subscribe_events(&self) -> broadcast::Receiver<TransportEvent>;
+    /// Maximum Transmission Unit (bytes) supported by this transport. Used for
+    /// message fragmentation decisions at higher layers.
+    fn mtu(&self) -> usize;
+
+    /// Current link-quality estimate (0.0 = unusable, 1.0 = perfect). This is
+    /// an instantaneous metric that routing algorithms can leverage when
+    /// selecting paths.
+    fn link_quality(&self) -> f32;
 }
 
 /// A basic in-memory mock transport useful for early tests
@@ -73,5 +81,16 @@ impl Transport for MockTransport {
 
     fn subscribe_events(&self) -> broadcast::Receiver<TransportEvent> {
         self.tx.subscribe()
+    }
+
+    fn mtu(&self) -> usize {
+        // In-memory mock – effectively unlimited but return a large common
+        // Ethernet MTU to exercise fragmentation logic in higher layers.
+        1500
+    }
+
+    fn link_quality(&self) -> f32 {
+        // Perfect connection for mock transport.
+        1.0
     }
 }
